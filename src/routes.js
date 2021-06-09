@@ -10,6 +10,7 @@ routes.get('/', async(req, res) => {
 
 routes.get('/wines', async(req, res) => {
     db.query('show tables', [], async(err, results) => {
+        if(err) return res.status(404).json({message: err})
         return res.json({data: results})  
     })
 })

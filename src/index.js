@@ -5,7 +5,7 @@ const cors = require('cors');
 const routes = require('./routes');
 const db = require('./services/db');
 
-db.connect((error) => error ? console.log(error) : console.log('Database Connected'));
+// db.connect((error) => error ? console.log(error) : console.log('Database Connected'));
 
 app.use(express.json());
 app.use(cors());

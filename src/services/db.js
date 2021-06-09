@@ -1,0 +1,11 @@
+const mysql = require('mysql');
+
+const db = mysql.createConnection({
+    host: process.env.DATABASE_HOST || 'localhost',
+    user: process.env.DATABASE_USER || 'root',
+    password: process.env.DATABASE_PASSWORD || '',
+    database: process.env.DATABASE || 'empresa_seunome',
+});
+
+
+module.exports = db;

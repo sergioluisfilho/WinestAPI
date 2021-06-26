@@ -1,18 +1,14 @@
 const express = require('express');
 const routes = express.Router();
-const db = require('./services/db');
+const wine = require('./wine');
 
 routes.get('/', async(req, res) => {
-
     return res.json({message: 'Hello, world'})
-    
 })
 
-routes.get('/wines', async(req, res) => {
-    db.query('show tables', [], async(err, results) => {
-        if(err) return res.status(404).json({message: err})
-        return res.json({data: results})  
-    })
-})
+routes.get('/wines', wine.getWines);
+
+routes.post('/wines', wine.postWine);
+
 
 module.exports = routes

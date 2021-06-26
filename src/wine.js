@@ -9,7 +9,10 @@ module.exports = {
     },
 
     async postWine(req, res) {
-        const {id, title, points, price, country, province, region1, region2, description, designation, variety, winery, taster_name, taster_twitter} = req.body;
+        const {id, title, points,
+               price, country, province, region1,
+               region2, description, designation, variety,
+               winery, taster_name, taster_twitter} = req.body;
         
         await db.query('INSERT INTO wines VALUES(?, ?, ?, ?)', [id, title, points, price,], async(err, results) => {
             if(err) return res.status(404).json({message: err})
@@ -31,13 +34,29 @@ module.exports = {
 })}})}})}})}})},
 
     async deleteWine(req, res){
-        const {id} = req.params
+        const {id} = req.params;
         db.query('DELETE from wines where id = ?;', [id], async(err, results) => {
             if(err) return res.status(404).json({message: err})
             return res.json({data: results})  
         })
        
     },
-    async updateWines(){}
+
+    async updateWine(req, res){
+        const {id} = req.params;
+        const {title, points, price,
+               country, province, region1,
+               region2, description, designation,
+               variety, winery, taster_name, taster_twitter} = req.body;
+        
+        await  db.query('UPDATE wines SET title = ?, points = ?, price = ? where id = ?;', [title, id], async(err, results) => {
+            if(err) return res.status(404).json({message: err})
+            else{
+                return res.json(results)
+            }
+        })
+    }
+
+    
     
 }

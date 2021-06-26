@@ -28,4 +28,8 @@ module.exports = {
                                             statusCode: 200,
                                             type: 'post',
                                             message: 'Created'
-})}})}})}})}})}}
+})}})}})}})}})},
+
+    async updateWines(){},
+    async deleteWines(){},
+}

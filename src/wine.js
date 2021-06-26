@@ -30,6 +30,14 @@ module.exports = {
                                             message: 'Created'
 })}})}})}})}})},
 
-    async updateWines(){},
-    async deleteWines(){},
+    async deleteWine(req, res){
+        const {id} = req.params
+        db.query('DELETE from wines where id = ?;', [id], async(err, results) => {
+            if(err) return res.status(404).json({message: err})
+            return res.json({data: results})  
+        })
+       
+    },
+    async updateWines(){}
+    
 }

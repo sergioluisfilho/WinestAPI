@@ -10,5 +10,7 @@ routes.get('/wines', wine.getWines);
 
 routes.post('/wines', wine.postWine);
 
+routes.delete('/wines/:id',wine.deleteWine);
+
 
 module.exports = routes

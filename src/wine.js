@@ -8,6 +8,18 @@ module.exports = {
         })
     },
 
+    async filterWine(req, res) {
+        let {title} = req.params;
+        title = '%' + title + '%'
+
+        db.query('SELECT * FROM wines where title LIKE ?;', [title], async(err, results) => {
+            if(err) return res.status(404).json({message: err});
+            else{
+                return res.json(results);
+            }
+        })
+    },
+
     async postWine(req, res) {
         const {id, title, points,
                price, country, province, region1,
@@ -18,13 +30,13 @@ module.exports = {
             if(err) return res.status(404).json({message: err})
             else{
                 
-                db.query(' INSERT INTO wine_location VALUES(?, ?, ?, ?, ?);', [id, country, province, region1, region2], async(err, results) =>{
+                db.query('INSERT INTO wine_location VALUES(?, ?, ?, ?, ?);', [id, country, province, region1, region2], async(err, results) =>{
                     if(err) return res.status(404).json({message: err})
                     else {
-                        db.query(' INSERT INTO wine_data VALUES(?, ?, ?, ?, ?);', [id, description, designation, variety, winery],async(err, results) =>{
+                        db.query('INSERT INTO wine_data VALUES(?, ?, ?, ?, ?);', [id, description, designation, variety, winery],async(err, results) =>{
                             if(err) return res.status(404).json({message: err})
                             else{
-                                db.query(' INSERT INTO wine_taster VALUES(?, ?, ?);', [id, taster_name, taster_twitter],async(err, results) =>{
+                                db.query('INSERT INTO wine_taster VALUES(?, ?, ?);', [id, taster_name, taster_twitter],async(err, results) =>{
                                     if(err) return res.status(404).json({message: err})
                                     else{
                                         return res.json({
@@ -39,7 +51,6 @@ module.exports = {
             if(err) return res.status(404).json({message: err})
             return res.json({data: results})  
         })
-       
     },
 
     async updateWine(req, res){
@@ -63,15 +74,6 @@ module.exports = {
                                     else {
                                         res.json(results)
                                     }
-                                })
-                             }
-                        })
-                    }
-                })
-            }
-        })
-    }
+})}})}})}})}
 
-    
-    
 }

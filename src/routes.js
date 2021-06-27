@@ -6,6 +6,8 @@ routes.get('/', async(req, res) => {
     return res.json({message: 'Hello, world'})
 })
 
+routes.get('/filter/:title', wine.filterWine);
+
 routes.get('/wines', wine.getWines);
 
 routes.post('/wines', wine.postWine);

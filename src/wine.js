@@ -49,10 +49,25 @@ module.exports = {
                region2, description, designation,
                variety, winery, taster_name, taster_twitter} = req.body;
         
-        await  db.query('UPDATE wines SET title = ?, points = ?, price = ? where id = ?;', [title, id], async(err, results) => {
+        await  db.query('UPDATE wines SET title = ?, points = ?, price = ? where id = ?;', [title, points, price, id], async(err, results) => {
             if(err) return res.status(404).json({message: err})
             else{
-                return res.json(results)
+                db.query('UPDATE wine_data SET description = ?, designation = ?, variety = ?, winery = ? where id = ?;', [description, designation, variety, winery, id], async(err, results) => {
+                    if(err) return res.status(404).json({message: err})
+                    else{
+                        db.query('UPDATE wine_location SET country = ?, province = ?, region1 = ?, region2 = ? where id = ?;', [country, province, region1, region2, id], async(err, results) => {
+                            if(err) return res.status(404).json({message: err})
+                            else{
+                                db.query('UPDATE wine_taster SET taster_name = ?, taster_twitter = ? where id = ?;', [taster_name, taster_twitter, id], async(err, results) => {
+                                    if(err) return res.status(404).json({message: err})
+                                    else {
+                                        res.json(results)
+                                    }
+                                })
+                             }
+                        })
+                    }
+                })
             }
         })
     }

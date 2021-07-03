@@ -9,6 +9,13 @@ module.exports = {
         })
     },
 
+    async qtdOfWines(req, res){
+        db.query('SELECT count(*) from wines', [], async(err, results) => {
+            if(err) return res.status(404).json({message: err})
+            return res.json({data: results})  
+        })
+    },
+
     async getWine(req, res) {
         const {id} = req.params;
         db.query('SELECT w.id, title, points, price, country, province, region1, region2, description, designation, variety, winery, taster_name, taster_twitter FROM wines AS w JOIN wine_Location AS wl ON w.id = wl.id JOIN wine_data AS wd ON w.id = wd.id JOIN wine_taster AS wt ON w.id = wt.id where w.id = ?;', [id], async(err, results) => {

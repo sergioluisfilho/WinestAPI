@@ -16,6 +16,13 @@ module.exports = {
         })
     },
 
+    async qtdPerGrapes(req, res){
+        db.query('SELECT variety, count(id) quantity from wine_data as w group by variety;', [], async(err, results) => {
+            if(err) return res.status(404).json({message: err})
+            return res.json({data: results})  
+        })
+    },
+
     async getWine(req, res) {
         const {id} = req.params;
         db.query('SELECT w.id, title, points, price, country, province, region1, region2, description, designation, variety, winery, taster_name, taster_twitter FROM wines AS w JOIN wine_Location AS wl ON w.id = wl.id JOIN wine_data AS wd ON w.id = wd.id JOIN wine_taster AS wt ON w.id = wt.id where w.id = ?;', [id], async(err, results) => {
@@ -41,7 +48,7 @@ module.exports = {
                price, country, province, region1,
                region2, description, designation, variety,
                winery, taster_name, taster_twitter} = req.body;
-        const id = 1;
+        const id = uuid();
         
         db.query('INSERT INTO wines VALUES(?, ?, ?, ?)', [id, title, points, price,], async(err, results) => {
             if(err) return res.status(404).json({message: err})

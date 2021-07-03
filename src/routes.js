@@ -8,6 +8,8 @@ routes.get('/', async(req, res) => {
 
 routes.get('/filter/:title', wine.filterWine);
 
+routes.get('/wines/:id', wine.getWine);
+
 routes.get('/wines', wine.getWines);
 
 routes.post('/wines', wine.postWine);
